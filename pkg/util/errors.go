@@ -2,7 +2,6 @@ package util
 
 import (
 	"log"
-	"strconv"
 )
 
 func FatalErrorCheck(err error) {
@@ -17,8 +16,4 @@ func WarningErrorCheck(err error) bool {
 		return false
 	}
 	return true
-}
-
-func Float2string(f float64, prec int) string {
-	return strconv.FormatFloat(f, 'f', prec, 64)
 }
