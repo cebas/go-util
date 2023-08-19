@@ -83,8 +83,30 @@ func TestFatalErrorCheck(t *testing.T) {
 	FatalErrorCheck(nil)
 }
 
-//func TestMain(m *testing.M) {
-//	// call flag.Parse() here if TestMain uses flags
-//
-//	os.Exit(m.Run())
-//}
+func TestGetHttpContent(t *testing.T) {
+	type args struct {
+		urlz string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{"TestGetHttpContent", args{"https://www.google.com"}, false},
+		{"TestGetHttpContent", args{"https://www.google.com/404"}, false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			_, err := GetHttpContent(tt.args.urlz, false)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("GetHttpContent() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+		})
+	}
+}
+
+func TestStartStopTor(t *testing.T) {
+	StartTor()
+	defer StopTor()
+}
