@@ -1,7 +1,10 @@
 package util
 
 import (
+	"github.com/microcosm-cc/bluemonday"
+
 	"testing"
+	"time"
 )
 
 func TestLogln(t *testing.T) {
@@ -109,4 +112,25 @@ func TestGetHttpContent(t *testing.T) {
 func TestStartStopTor(t *testing.T) {
 	StartTor()
 	defer StopTor()
+}
+
+func TestRetry(t *testing.T) {
+	url := "http://checkip.dyndns.org/"
+
+	err := Retry(10, 1*time.Second, func() error {
+		body, err := GetHttpContent(url, false)
+		if err == nil {
+			// remove html tags from body
+			//p := bluemonday.StripTagsPolicy()
+
+			// The policy can then be used to sanitize lots of input and it is safe to use the policy in multiple goroutines
+			body := bluemonday.StripTagsPolicy().SanitizeBytes(body)
+
+			Logln(string(body))
+		}
+		return err
+	})
+	if err != nil {
+		t.Errorf("Retry() error = %v", err)
+	}
 }
