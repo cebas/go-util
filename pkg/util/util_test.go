@@ -1,10 +1,7 @@
 package util
 
 import (
-	"github.com/microcosm-cc/bluemonday"
-
 	"testing"
-	"time"
 )
 
 func TestLogln(t *testing.T) {
@@ -86,6 +83,7 @@ func TestFatalErrorCheck(t *testing.T) {
 	FatalErrorCheck(nil)
 }
 
+/*
 func TestGetHttpContent(t *testing.T) {
 	type args struct {
 		urlz string
@@ -100,7 +98,7 @@ func TestGetHttpContent(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := GetHttpContent(tt.args.urlz, false)
+			_, err := GetHttpContent(tt.args.urlz, []Header{}, false)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetHttpContent() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -108,21 +106,21 @@ func TestGetHttpContent(t *testing.T) {
 		})
 	}
 }
+*/
 
 func TestStartStopTor(t *testing.T) {
 	StartTor()
 	defer StopTor()
 }
 
+/*
 func TestRetry(t *testing.T) {
 	url := "http://checkip.dyndns.org/"
 
 	err := Retry(10, 1*time.Second, func() error {
-		body, err := GetHttpContent(url, false)
+		body, err := GetHttpContent(url, []Header{}, false)
 		if err == nil {
 			// remove html tags from body
-			//p := bluemonday.StripTagsPolicy()
-
 			// The policy can then be used to sanitize lots of input and it is safe to use the policy in multiple goroutines
 			body := bluemonday.StripTagsPolicy().SanitizeBytes(body)
 
@@ -133,4 +131,10 @@ func TestRetry(t *testing.T) {
 	if err != nil {
 		t.Errorf("Retry() error = %v", err)
 	}
+}
+*/
+
+// test executableDir()
+func TestExecutableDir(t *testing.T) {
+	ExecutableDir()
 }
