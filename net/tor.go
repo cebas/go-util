@@ -1,6 +1,7 @@
-package util
+package net
 
 import (
+	"github.com/cebas/go-util/util"
 	"net/http"
 	"net/url"
 )
@@ -20,7 +21,7 @@ func StopTor() {
 
 func torTransport() http.RoundTripper {
 	proxy, err := url.Parse(torServerUrl)
-	FatalErrorCheck(err)
+	util.FatalErrorCheck(err)
 
 	return &http.Transport{Proxy: http.ProxyURL(proxy)}
 }

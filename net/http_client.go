@@ -1,7 +1,8 @@
-package util
+package net
 
 import (
 	"github.com/avast/retry-go"
+	"github.com/cebas/go-util/util"
 
 	"bytes"
 	"encoding/json"
@@ -22,7 +23,7 @@ type HttpHeader struct {
 	Value string
 }
 
-var cache = NewCache()
+var cache = util.NewCache()
 
 func NewHttpClient(torified bool, cached bool) *HttpClient {
 	var httpClient *http.Client
@@ -101,6 +102,7 @@ func (c *HttpClient) httpCall(method string, path string, headers []HttpHeader, 
 		return nil, err
 	}
 
+	//goland:noinspection GoUnhandledErrorResult
 	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
@@ -126,4 +128,10 @@ func (c *HttpClient) Patch(path string, headers []HttpHeader, params url.Values,
 
 func (c *HttpClient) Post(path string, headers []HttpHeader, params url.Values, payload interface{}) (body []byte, err error) {
 	return c.httpCall(http.MethodPost, path, headers, params, payload)
+}
+
+func GetHttpContent(path string) (content []byte, err error) {
+	httpClient := NewHttpClient(false, false)
+	content, err = httpClient.Get(path, []HttpHeader{}, url.Values{})
+	return
 }

@@ -1,0 +1,1 @@
+"tomar" ideas de https://github.com/marcopaganini/logger/blob/master/logger.go
