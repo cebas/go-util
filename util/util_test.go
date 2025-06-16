@@ -5,12 +5,14 @@ import (
 )
 
 func TestLogln(t *testing.T) {
-	Logln("LogLn test")
+	log := NewLog(0)
+	log.Println(0, "LogLn test")
 	// Output: LogLn test
 }
 
 func TestLogf(t *testing.T) {
-	Logf("Logf test: int %d - str %s\n", 42, "test")
+	log := NewLog(0)
+	log.Printf(0, "Logf test: int %d - str %s\n", 42, "test")
 	// Output: Logf test: int 42 - str test
 }
 
@@ -137,4 +139,12 @@ func TestRetry(t *testing.T) {
 // test executableDir()
 func TestExecutableDir(t *testing.T) {
 	ExecutableDir()
+}
+
+// test GetHttpContent()
+func TestGetHttpContent(t *testing.T) {
+	_, err := GetHttpContent("https://ifconfig.me/ip")
+	if err != nil {
+		t.Errorf("GetHttpContent() error = %v", err)
+	}
 }
