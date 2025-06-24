@@ -3,12 +3,16 @@ package util
 import "fmt"
 
 type Log struct {
-	verbose int
-	indent  int
+	verbosity int
+	indent    int
 }
 
-func NewLog(verbose int) Log {
-	return Log{verbose: verbose, indent: 0}
+func NewLog() Log {
+	return Log{verbosity: 0, indent: 0}
+}
+
+func (l *Log) Verbosity(verbosity int) {
+	l.verbosity = verbosity
 }
 
 func _print(msg string) {
@@ -34,7 +38,7 @@ func (l *Log) Indent(newLevel int) {
 }
 
 func (l *Log) shouldPrint(verbose int) bool {
-	return verbose <= l.verbose
+	return verbose <= l.verbosity
 }
 
 // Println prints a message to stdout

@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-var logger = NewLog(0)
+var logger = NewLog()
 
 func FatalErrorCheck(err error) {
 	if err != nil {
